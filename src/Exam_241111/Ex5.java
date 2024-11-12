@@ -9,19 +9,29 @@
 
 package Exam_241111;
 
+import java.io.*;
 import java.util.Scanner;
 
 public class Ex5 {
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
 
-      Scanner scan = new Scanner(System.in);
-
-    System.out.print("확인할 월을 입력해 주세요 : ");
-      int season = scan.nextInt();
+//      Scanner scan = new Scanner(System.in);
+    BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
+    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
+    System.out.print("계절을 확인할 월을 입력해 주세요 : ");
+      int season = Integer.parseInt(scan.readLine());
 
       if (season >= 3 && season <= 5) {
+      writer.write("봄입니다." + "\n");
+      } else if(season >= 6 && season <= 8){
+        writer.write("여름입니다." + "\n");
+      } else if(season >= 9 && season <= 11) {
+        writer.write("가을입니다." + "\n");
+      } else {
+        writer.write("겨울입니다." + "\n");
+        }
 
-      }
-
+    writer.flush();
+      writer.close();
   }
 }
