@@ -31,11 +31,11 @@
 // 연체 도서 관리 기능
 // 도서 예약 시스템
 
-package Exam_241113;
+package Exam_241114;
 
 import java.io.*;
 
-public class ExLast {
+public class ExLast_Improvement_FeedbackAI {
   public static void main(String[] args) throws IOException {
     //    // 도서 정보
     ////
