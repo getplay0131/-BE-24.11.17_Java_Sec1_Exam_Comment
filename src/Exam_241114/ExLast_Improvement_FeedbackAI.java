@@ -75,6 +75,18 @@ public class ExLast_Improvement_FeedbackAI {
     while (true) {
     System.out.println("=========== 도서관 관리 시스템 =============");
     System.out.println("원하시는 기능을 선택해주세요! ");
+        if (inBookCount == 10) {
+            System.out.println("안내 : 현재 등록된 도서과 10권이므로 추가 등록은 불가합니다.");
+            System.out.print(
+                     " 2. 도서 검색 (제목 또는 저자로)"
+                            + "3. 도서 대출 / 반납 "
+                            + "\n"
+                            + "4. 전체 도서 목록 출력"
+                            + "5. 대출 중인 "
+                            + "도서 목록 "
+                            + "출력"
+                            + " 0. 시스템 종료 : ");
+        } else {
     System.out.print(
         "1. 도서 등록 "
             + " 2. 도서 검색 (제목 또는 저자로)"
@@ -85,6 +97,7 @@ public class ExLast_Improvement_FeedbackAI {
             + "도서 목록 "
             + "출력"
             + " 0. 시스템 종료 : ");
+        }
     int choice = Integer.parseInt(String.valueOf(scan.readLine()));
 
     //    개선 필요 사항:
@@ -241,7 +254,7 @@ switch(choice) {
       boolean found = false;
       String[]  results = new String[bookcount];
       int resultCount = 0;
-    System.out.println("검색하실 내용을 입력해주세요! : ");
+    System.out.print("검색하실 내용을 입력해주세요! : ");
     String searchText = buffer.readLine();
     for (int i = 0; i <= bookcount; i++) {
       if (searchText.contains(bookAuthor[i]) || searchText.contains(bookTitle[i])) {
@@ -302,7 +315,7 @@ switch(choice) {
       String bookTaskInfo = scan.readLine();
 
     for (int i = 0; i < bookcount; i++) {
-          if (bookTaskInfo.contains("반납")){
+          if (bookTaskInfo.equals("반납")){
     System.out.print("도서의 제목을 입력해주세요! : ");
     String inputBookTitle = scan.readLine();
 
@@ -326,8 +339,25 @@ switch(choice) {
         continue;
           }
 
-          } else if(bookTaskInfo.contains("대출")){
-              
+          } else if(bookTaskInfo.equals("대출")){
+              System.out.print("도서의 제목을 입력해주세요! : ");
+              String inputBookTitle = scan.readLine();
+
+              System.out.print("해당 도서의 저자를 입력해주세요! : ");
+              String inputBookAuthor = scan.readLine();
+
+              System.out.print("해당 도서의 출판 연도를 입력해주세요! : ");
+              String inputBookSince = scan.readLine();
+              if (bookTitle[i].equals(inputBookTitle) || bookAuthor[i].equals(inputBookAuthor)) {
+                  System.out.println("대출이 완료되었습니다.");
+                  bookTitle[i] = inputBookTitle;
+                  bookAuthor[i] = inputBookAuthor;
+                  bookSince[i] = Integer.parseInt(inputBookSince);
+                  bookLoanStat[i] = false;
+                  bookIndex++;
+                  bookLoanStat[bookIndex] = false;
+                  found = true;
+                  continue;
           }
     }
         if (bookExists) {
@@ -336,48 +366,15 @@ switch(choice) {
             bookLoanStat[bookIndex] = false;
         }
   }
+}
 
-//  public static String outCurrentBook(
-//      BufferedReader scan,
-//      boolean bookLoanStat,
-//      String[] bookTitle,
-//      String[] bookAuthor,
-//      int[] bookSince,
-//      String[] outBookList)
-//      throws IOException {
-//
-//    System.out.print("도서의 제목을 입력해주세요! : ");
-//    String inputBookTitle = scan.readLine();
-//
-//    System.out.print("해당 도서의 저자를 입력해주세요! : ");
-//    String inputBookAuthor = scan.readLine();
-//
-//    System.out.print("해당 도서의 출판 연도를 입력해주세요! : ");
-//    String inputBookSince = scan.readLine();
-//
-//    String outBook = String.valueOf(outBookList);
-//      if (inputBookTitle.isEmpty()
-//          && inputBookAuthor.isEmpty()
-//          && String.valueOf(inputBookSince).isEmpty()) {
-//        System.out.println("도서 정보를 입력해주세요!");
-//      } else if (bookLoanStat == false) {
-//        System.out.println("해당 도서는 대출 중이기에 대출이 불가합니다.");
-//      } else {
-////        bookTitle[i].replace(String.valueOf(inputBookTitle), " ");
-////        bookAuthor[i].replace(String.valueOf(inputBookAuthor), " ");
-////        bookSince[i] = Integer.parseInt(inputBookSince.replace((inputBookSince), " "));
-//        bookLoanStat = false;
-//        System.out.println("대출이 완료되었습니다.");
-//      }
-//    return outBook;
-//  }
 
   public static void bookList(
       String[] booktitle,
       int bookcount,
       String[] bookAuthor,
       int[] bookSince,
-      boolean bookLoanStat) {
+      boolean [] bookLoanStat) {
     System.out.println(" === 현재 보관중인 도서 목록 === ");
     if (bookcount == 0) {
       System.out.println("등록된 도서가 없습니다.");
@@ -386,7 +383,7 @@ switch(choice) {
         System.out.print(booktitle[i] + " ,");
         System.out.print(bookAuthor[i] + " ,");
         System.out.print(bookSince[i] + " ,");
-        if (bookLoanStat == true) {
+        if (bookLoanStat[i] == true) {
           System.out.print("대출 가능");
         } else {
           System.out.print("대출 불가");
